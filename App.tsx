@@ -6,19 +6,20 @@ import { faListUl, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Login from "./screens/login";
 import Signup from "./screens/signup";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [showSignup, setShowSignup] = useState(false);
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaProvider>
-        {showSignup ? (
-          <Signup />
-        ) : (
-          <Login onSignup={() => setShowSignup(true)} />
-        )}
-      </SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Login" component={Login as any} />
+          <Stack.Screen name="Signup" component={Signup as any} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </GestureHandlerRootView>
   );
 }

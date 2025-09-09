@@ -2,19 +2,17 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Alert, Pressable } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
-type LoginProps = {
-  onSignup?: () => void;
-};
-
-export default function login({ onSignup }: LoginProps) {
+export default function login() {
+  const navigation = useNavigation();
   const [signUpPressed, setSignUpPressed] = useState(false);
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 bg-white">
         <View className="flex-1 mt-28">
           <Text className="text-center text-[#E03A2E] text-[36px] font-extrabold">
-            UMTC Intramurals
+            UMTC <Text className="text-[#F6C667]">Intramurals</Text>
           </Text>
 
           <View className="flex-1 ml-16 mt-24">
@@ -84,20 +82,14 @@ export default function login({ onSignup }: LoginProps) {
               hitSlop={10}
               onPress={() => {
                 setSignUpPressed(true);
-                if (onSignup) {
-                  onSignup();
-                } else {
-                  Alert.alert("Sign up", "Navigate to sign up screen");
-                }
+                navigation.navigate("Signup" as never);
               }}
             >
               <Text className="text-[16px] font-bold text-[#900C27]">
                 Sign up
               </Text>
             </Pressable>
-            {signUpPressed && (
-              <Text className="ml-2 text-[14px] text-green-700">Pressed</Text>
-            )}
+            {signUpPressed}
           </View>
         </View>
       </SafeAreaView>
