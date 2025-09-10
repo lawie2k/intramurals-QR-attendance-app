@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 export default function login() {
   const navigation = useNavigation();
   const [signUpPressed, setSignUpPressed] = useState(false);
+  const [loginPressed, setloginPressed] = useState(false);
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 bg-white">
@@ -66,7 +67,10 @@ export default function login() {
             />
             <TouchableOpacity
               className="mt-6 w-[300px] bg-[#900C27] py-3"
-              onPress={() => {}}
+              onPress={() => {
+                setloginPressed(true);
+                navigation.navigate("Main" as never);
+              }}
             >
               <Text className="text-center text-white text-[17px] font-bold">
                 Login
@@ -90,6 +94,7 @@ export default function login() {
               </Text>
             </Pressable>
             {signUpPressed}
+            {loginPressed}
           </View>
         </View>
       </SafeAreaView>

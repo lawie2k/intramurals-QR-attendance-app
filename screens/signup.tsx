@@ -1,4 +1,10 @@
-import { View, Text, TouchableOpacity, Pressable, TextInput } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Pressable,
+  TextInput,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
@@ -54,7 +60,7 @@ export default function signup() {
             ></TextInput>
 
             <TextInput
-              className="bg-white w-[300px] h-[50px] mt-4 px-4 py-3"
+              className="bg-white w-[300px] h-[50px] mt-6 px-4 py-3"
               style={{
                 shadowColor: "#000",
                 shadowOffset: {
@@ -78,7 +84,7 @@ export default function signup() {
             ></TextInput>
 
             <TextInput
-              className="bg-white w-[300px] h-[50px] mt-4 px-4 py-3"
+              className="bg-white w-[300px] h-[50px] mt-6 px-4 py-3"
               style={{
                 shadowColor: "#000",
                 shadowOffset: {
@@ -102,7 +108,7 @@ export default function signup() {
             ></TextInput>
 
             <TextInput
-              className="bg-white w-[300px] h-[50px] mt-4 px-4 py-3"
+              className="bg-white w-[300px] h-[50px] mt-6 px-4 py-3"
               style={{
                 shadowColor: "#000",
                 shadowOffset: {
@@ -126,7 +132,7 @@ export default function signup() {
             ></TextInput>
 
             <TextInput
-              className="bg-white w-[300px] h-[50px] mt-4 px-4 py-3"
+              className="bg-white w-[300px] h-[50px] mt-6 px-4 py-3"
               style={{
                 shadowColor: "#000",
                 shadowOffset: {
@@ -158,7 +164,6 @@ export default function signup() {
             </TouchableOpacity>
           </View>
         </View>
-        
       </SafeAreaView>
     </SafeAreaProvider>
   );
