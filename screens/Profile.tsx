@@ -10,7 +10,9 @@ export default function Profile() {
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        <Text>Hello from profile</Text>
+        <View className="mt-14">
+          <Text className="text-[24px] font-extrabold ml-5">Profile</Text>
+        </View>
       </SafeAreaView>
     </SafeAreaProvider>
   );

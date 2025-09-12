@@ -10,7 +10,24 @@ export default function QR() {
   return (
     <SafeAreaProvider>
       <SafeAreaView>
-        <Text>Hello from QR</Text>
+        <View className="mt-14">
+          <Text className="text-[24px] font-extrabold ml-5">QR</Text>
+        </View>
+
+        <View
+          className="flex self-center bg-white mt-[38px] w-[340px] h-[340px] rounded-xl"
+          style={{
+            shadowColor: "#000",
+            shadowOffset: {
+              width: 0,
+              height: 3,
+            },
+            shadowOpacity: 0.29,
+            shadowRadius: 4.65,
+
+            elevation: 7,
+          }}
+        ></View>
       </SafeAreaView>
     </SafeAreaProvider>
   );
