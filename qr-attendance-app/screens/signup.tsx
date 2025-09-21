@@ -156,7 +156,7 @@ export default function Signup() {
 
             <TouchableOpacity
               className="mt-6 w-[300px] bg-[#900C27] py-3"
-              onPress={() => {}}
+              onPress={() => {navigation.navigate("Facescan" as never)}}
             >
               <Text className="text-center text-white text-[17px] font-bold">
                 Register
