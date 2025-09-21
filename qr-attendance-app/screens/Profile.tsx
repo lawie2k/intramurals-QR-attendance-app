@@ -5,8 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import {useNavigation} from "@react-navigation/native";
 
 export default function Profile() {
+    const navigation = useNavigation();
   return (
     <SafeAreaProvider>
       <SafeAreaView>
@@ -46,7 +48,9 @@ export default function Profile() {
 
                         elevation: 7,
                     }}>
-                  <Text className="text-[16px] font-bold px-4 py-3">Password</Text>
+                 <TouchableOpacity onPress={()=>{navigation.navigate("Resetpass" as never)}}>
+                     <Text className="text-[16px] font-bold px-4 py-3">Password</Text>
+                 </TouchableOpacity>
               </View>
           </View>
 
@@ -64,7 +68,7 @@ export default function Profile() {
                         elevation: 7,
                     }}>
                   <Text>
-                      <TouchableOpacity>
+                      <TouchableOpacity onPress={()=>{navigation.navigate("Login"as never)}}>
                           <Text className="text-[16px] font-bold px-4 py-3">Log out</Text>
                       </TouchableOpacity>
                   </Text>
