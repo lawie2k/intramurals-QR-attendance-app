@@ -7,7 +7,7 @@ import {useNavigation} from "@react-navigation/native";
 import {useState} from "react";
 
 
-export default function resetpass(){
+export default function ResetPass(){
     const navigation = useNavigation();
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import type { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faHouse } from "@fortawesome/free-solid-svg-icons/faHouse";
@@ -35,10 +35,13 @@ export default function BottomBar({
             navigation.navigate(route.name);
         };
         return (
-          <TouchableOpacity
+          <Pressable
             key={route.key}
             onPress={onPress}
             className="flex-1 items-center pb-12 pt-6"
+            style={({ pressed }) => ({
+              opacity: pressed ? 0.8 : 1,
+            })}
           >
             <View
               className={`items-center px-4 py-2 w-[100px] h-[50px] rounded-xl ${
@@ -61,7 +64,7 @@ export default function BottomBar({
                 {route.name}
               </Text>
             </View>
-          </TouchableOpacity>
+          </Pressable>
         );
       })}
     </View>

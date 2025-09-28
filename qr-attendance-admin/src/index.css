@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@keyframes scan {
+  0% {
+    top: 0%;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    top: 100%;
+    opacity: 1;
+  }
+}

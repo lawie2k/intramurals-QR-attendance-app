@@ -8,7 +8,7 @@ import Leaderboard from "./screens/Leaderboard";
 import Profile from "./screens/Profile";
 import FaceScan from "./screens/facescan";
 import ScanSuccess from "./screens/scanSuccess";
-import Resetpass from "./screens/resetpass";
+import ResetPass from "./screens/resetpass";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -41,7 +41,7 @@ export default function App() {
           <Stack.Screen name="Signup" component={Signup as any} />
             <Stack.Screen name="Facescan" component={FaceScan as any} />
             <Stack.Screen name="Scansuccess" component={ScanSuccess as any} />
-            <Stack.Screen name="Resetpass" component={Resetpass as any} />
+            <Stack.Screen name="Resetpass" component={ResetPass as any} />
           {/* Render the bottom tabs instead of a single Home screen */}
           <Stack.Screen name="Main" component={Tabs as any} />
         </Stack.Navigator>
