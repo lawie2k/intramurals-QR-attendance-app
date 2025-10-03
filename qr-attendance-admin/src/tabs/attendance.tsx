@@ -76,7 +76,7 @@ export default function Attendance() {
                     </div>
                 </>
             )}
-			<h1 className="mt-[20px] text-[20px]"><span className="font-bold text-[36px]">Attendance </span></h1>
+			<h1 className="mt-[20px] font-bold text-[36px]">Attendance</h1>
 		<div>
 			<div className="w-full h-full mt-[10px] flex flex-col justify-between	 ">
 				<div className="flex justify-between">
