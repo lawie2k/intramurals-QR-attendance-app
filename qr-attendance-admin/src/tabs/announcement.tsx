@@ -4,7 +4,7 @@ export default function announcement() {
         <>
         <div className="h-[900px] px-[40px] pt-[20px]">
 			<div>
-				<h1 className="mt-[20px] font-bold text-[36px]">Events</h1>
+				<h1 className="mt-[20px] font-bold text-[36px]">Announcement</h1>
 			</div>
 			<div className=" mt-12 flex-col">
 				<input type="text" className="w-[100px] mr-2 text-black border-1 border-black-300 rounded-md text-bold" placeholder="Title" />
