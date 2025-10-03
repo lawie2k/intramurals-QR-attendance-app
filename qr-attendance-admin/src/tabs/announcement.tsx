@@ -7,9 +7,9 @@ export default function announcement() {
 				<h1 className="mt-[20px] font-bold text-[36px]">Announcement</h1>
 			</div>
 			<div className=" mt-12 flex-col">
-				<input type="text" className="w-[100px] mr-2 text-black border-1 border-black-300 rounded-md text-bold" placeholder="Title" />
-				<input type="date" className="w-[120px] mr-2 text-black border-1 border-black-300 rounded-md text-bold" placeholder="Date Posted"/>
-				<input type="text" className="w-[100px] mr-2 text-black border-1 border-black-300 rounded-md text-bold" placeholder="Status" />
+				<input type="text" className="w-[100px] mr-2 px-1 text-black border-1 border-black-300 rounded-md text-bold" placeholder="Title" />
+				<input type="date" className="w-[125px] mr-2 px-1 text-black border-1 border-black-300 rounded-md text-bold" placeholder="Date Posted"/>
+				<input type="text" className="w-[100px] mr-2 px-1 text-black border-1 border-black-300 rounded-md text-bold" placeholder="Status" />
 
 				<button className="w-[100px] h-[25px] bg-[#18B500] font-bold text-white ml-2 rounded-md">Add Events</button>
 			</div>
