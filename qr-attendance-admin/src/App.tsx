@@ -9,8 +9,14 @@ import Attendance from "./tabs/attendance";
 import Events from "./tabs/events";
 import Leaderboard from "./tabs/leaderboard";
 import Reports from "./tabs/reports";
-import Announcement from "./tabs/announcement";
 import Student from "./tabs/student";
+// Super Admin imports
+import SuperAdminMainDashboard from "./superAdminMainDashboard";
+import SuperAdminDashboard from "./superAdminTabs/superAdminDashboard";
+import SuperAdminEvents from "./superAdminTabs/superAdminEvents";
+import SuperAdminLeaderboard from "./superAdminTabs/superAdminLeaderboard";
+import SuperAdminAnnouncement from "./superAdminTabs/superAdminAnnouncement";
+import SuperAdminReports from "./superAdminTabs/superAdminReports";
 
 export default function App() {
     return (
@@ -26,8 +32,15 @@ export default function App() {
                         <Route path="events" element={<Events />} />
                         <Route path="leaderboard" element={<Leaderboard />} />
                         <Route path="student" element={<Student />} />
-                        <Route path="announcement" element={<Announcement />} />
                         <Route path="reports" element={<Reports />} />
+                    </Route>
+                    {/* Super Admin Routes */}
+                    <Route path="/super-admin" element={<SuperAdminMainDashboard />}>
+                        <Route path="super-admin-dashboard" element={<SuperAdminDashboard />} />
+                        <Route path="super-admin-events" element={<SuperAdminEvents />} />
+                        <Route path="super-admin-leaderboard" element={<SuperAdminLeaderboard />} />
+                        <Route path="super-admin-announcement" element={<SuperAdminAnnouncement />} />
+                        <Route path="super-admin-reports" element={<SuperAdminReports />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

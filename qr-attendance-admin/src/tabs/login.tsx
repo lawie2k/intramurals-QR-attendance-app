@@ -29,7 +29,18 @@ export default function Login() {
               onClick={() => navigate("/dashboard") }>
                 Login
               </button>
-                <h2 className="mt-24 font-bold">add new <button className="text-[#900C27]"
+              
+              {/* Super Admin Login Button */}
+              <div className="mt-6 border-t border-gray-300 w-[310px] pt-4">
+                <p className="text-sm text-gray-600 text-center mb-3">🔒 Super Admin Access</p>
+                <button className="bg-[#8B0000] w-[310px] h-[40px] text-white font-extrabold hover:bg-[#660000] transition-colors"
+                onClick={() => navigate("/super-admin/super-admin-dashboard") }>
+                  Super Admin Login
+                </button>
+                <p className="text-xs text-red-600 text-center mt-2">⚠️ Authorized Personnel Only</p>
+              </div>
+              
+                <h2 className="mt-8 font-bold">add new <button className="text-[#900C27]"
                     onClick={()=>navigate("/signup")}>Admin</button>
                 </h2>
             </div>

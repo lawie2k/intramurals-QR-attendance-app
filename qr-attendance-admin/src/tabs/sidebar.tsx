@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-    faBullhorn,
     faCalendarDays,
     faClipboardUser, faFile,
     faMedal,
@@ -62,15 +61,6 @@ export default function Sidebar() {
                             onClick={() => setActive("student")}>
                             <FontAwesomeIcon icon={faSchool} />
                             <span className="ml-2">Student</span>
-                        </NavLink>
-                    </div>
-                    <div className="text-white pt-10">
-                        <NavLink
-                            to="/announcement"
-                            className={`text-[28px] font-extrabold w-[250px] text-left px-3 py-2 rounded-xl ${active === "announcement" ? "bg-[#F1F8FD] text-[#FFB522]" : "hover:text-[#FFB522]"}`}
-                            onClick={() => setActive("announcement")}>
-                            <FontAwesomeIcon icon={faBullhorn} />
-                            <span className="ml-2">Announcement</span>
                         </NavLink>
                     </div>
                     <div className="text-white pt-10">
