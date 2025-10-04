@@ -13,6 +13,7 @@ import Student from "./tabs/student";
 // Super Admin imports
 import SuperAdminMainDashboard from "./superAdminMainDashboard";
 import SuperAdminDashboard from "./superAdminTabs/superAdminDashboard";
+import SuperAdminManageAdmins from "./superAdminTabs/superAdminManageAdmins";
 import SuperAdminEvents from "./superAdminTabs/superAdminEvents";
 import SuperAdminLeaderboard from "./superAdminTabs/superAdminLeaderboard";
 import SuperAdminAnnouncement from "./superAdminTabs/superAdminAnnouncement";
@@ -37,6 +38,7 @@ export default function App() {
                     {/* Super Admin Routes */}
                     <Route path="/super-admin" element={<SuperAdminMainDashboard />}>
                         <Route path="super-admin-dashboard" element={<SuperAdminDashboard />} />
+                        <Route path="super-admin-manage-admins" element={<SuperAdminManageAdmins />} />
                         <Route path="super-admin-events" element={<SuperAdminEvents />} />
                         <Route path="super-admin-leaderboard" element={<SuperAdminLeaderboard />} />
                         <Route path="super-admin-announcement" element={<SuperAdminAnnouncement />} />

@@ -263,13 +263,13 @@ export default function Dashboard() {
 			<div className="w-full h-[650px] mt-[10px] flex flex-col">
 
 				<div className="flex justify-between ">
-				<div className="w-[590px] h-[280px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4">
+				<div className="w-[590px] h-[280px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4 border-l-4 border-red-500">
                     <h2 className="text-lg font-bold mb-3">Recent Activity</h2>
                     <div className="h-[200px]">
                         <Bar data={recentActivityData} options={recentActivityOptions} />
                     </div>
                 </div>
-				<div className="w-[590px] h-[280px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4">
+				<div className="w-[590px] h-[280px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4 border-l-4 border-red-500">
                     <h2 className="text-lg font-bold mb-3">Student Attendance</h2>
                     <div className="h-[200px]">
                         <Bar data={studentChartData} options={chartOptions} />
@@ -277,13 +277,13 @@ export default function Dashboard() {
                 </div>
 				</div>
 				<div className="flex justify-between mt-[30px]">
-				<div className="w-[500px] h-[500px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4">
+				<div className="w-[500px] h-[500px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4 border-l-4 border-red-500">
                     <h2 className="text-lg font-bold mb-3">Events</h2>
                     <div className="h-[400px]">
                         <Bar data={eventsChartData} options={eventsChartOptions} />
                     </div>
                 </div>
-				<div className="w-[680px] h-[500px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4">
+				<div className="w-[680px] h-[500px] bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4 border-l-4 border-red-500">
                     <h2 className="text-lg font-bold mb-3">Leaderboards</h2>
                     <div className="h-[400px] flex items-center justify-center">
                         <div className="w-[300px] h-[300px]">

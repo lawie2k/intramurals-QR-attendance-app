@@ -86,7 +86,7 @@ export default function Attendance() {
                     <h2>Scan Qr</h2>
                 </button>
 				</div>
-				<div className="w-full h-[700px] mt-2 bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4">
+				<div className="w-full h-[700px] mt-2 bg-[#FEF2F2] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4 border-l-4 border-red-500">
                     <DataGrid 
                         data={attendanceData}
                         columns={columns}
