@@ -1,5 +1,18 @@
+import React from "react";
+import DataGridItem from "../../components/DataGrid";
+import DataGrid from "../../components/DataGrid";
 
 export default function announcement() {
+
+    const announcementData = [
+        { id: 1, Title: "Basketball finals", Date:"2024-01-15", Status:"ongoing" }
+    ];
+
+    const columns = [
+        { field: "Title", headerName: "Game Name", width: "200px" },
+        { field: "Date", headerName: "Date", width: "150px" },
+        { field: "Status", headerName: "Status", width: "100px" },
+    ]
     return (
         <>
         <div className="h-[900px] px-[40px] pt-[20px]">
@@ -14,7 +27,9 @@ export default function announcement() {
 				<button className="w-[100px] h-[25px] bg-[#18B500] font-bold text-white ml-2 rounded-md">Add Events</button>
 			</div>
 			<div className="w-full h-[700px] mt-2 bg-[#F1F8FD] shadow-[2px_2px_0px_0px_rgba(0,_0,_0,_0.1)] p-4">
-				
+				<DataGrid columns={columns}
+                          data={announcementData}
+                />
 			</div>
 			</div>
 		
