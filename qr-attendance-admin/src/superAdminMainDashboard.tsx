@@ -1,5 +1,5 @@
 import SuperAdminSidebar from "./superAdminTabs/superAdminSidebar"
-import Topbar from "./tabs/topbar"
+import SuperAdminTopbar from "./superAdminTabs/superAdminTopbar"
 import { Outlet } from "react-router-dom";
 
 export default function SuperAdminMainDashboard() {
@@ -9,7 +9,7 @@ export default function SuperAdminMainDashboard() {
                 <div className="flex">
                     <SuperAdminSidebar />
                     <div className="flex-1">
-                        <Topbar />
+                        <SuperAdminTopbar />
                         <Outlet />
                     </div>
                 </div>
