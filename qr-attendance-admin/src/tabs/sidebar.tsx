@@ -17,7 +17,7 @@ export default function Sidebar() {
             <div
                 className='bg-[#900C27] w-[390px] h-screen shadow-[0px_-1px_29px_4px_rgba(0,_0,_0,_0.8)]'>
                 <div className="pl-10">
-                    <h1 className="text-[#F6C667] text-[36px] font-extrabold">UMTC<span className="text-[#F6C667]">Intramurals</span></h1>
+                    <h1 className="text-[#E03A2E] text-[36px] font-extrabold">UMTC<span className="text-[#F6C667]">Intramurals</span></h1>
                     <div className='text-white pt-10'>
                         <NavLink
                             to="/dashboard"
