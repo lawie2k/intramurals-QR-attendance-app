@@ -1,0 +1,88 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Leaderboards {
+  Dept_id       Int        @id @default(autoincrement())
+  Name          String
+  Medals_gold   Int        @default(0)
+  Medals_silver Int        @default(0)
+  Medals_bronze Int        @default(0)
+
+  // Relations
+  students      Student[]
+}
+
+model Student {
+  Student_id      Int       @id @default(autoincrement())
+  Name            String
+  Email           String    @unique
+  Dept_id         Int?
+  Qr_code         String?
+  Face_data       String?   // AWS Rekognition FaceId
+  Date_registered DateTime  @default(now())
+
+  // Relations
+  department      Leaderboards? @relation(fields: [Dept_id], references: [Dept_id])
+  attendances     Attendance[]
+
+  @@map("Student")
+}
+
+model Event {
+  Event_id Int      @id @default(autoincrement())
+  Name     String
+  Date     DateTime?
+  Time     DateTime?
+  Venue    String?
+  Status   String?  @default("Scheduled")
+
+  // Relations
+  attendances Attendance[]
+}
+
+model Attendance {
+  Attendance_id Int      @id @default(autoincrement())
+  Student_id    Int
+  Event_id      Int
+  Checkin_time  DateTime @default(now())
+  Status        String?  @default("Present")
+
+  // Relations
+  student Student @relation(fields: [Student_id], references: [Student_id], onDelete: Cascade)
+  event   Event   @relation(fields: [Event_id], references: [Event_id], onDelete: Cascade)
+}
+
+model Admin {
+  Admin_id      Int       @id @default(autoincrement())
+  Name          String
+  Role          String?   @default("Admin")
+  Email         String    @unique
+  Password_hash String
+
+  // Relations
+  announcements Announcement[]
+}
+
+model Announcement {
+  Announcement_id Int      @id @default(autoincrement())
+  Title           String
+  Message         String
+  Date_posted     DateTime @default(now())
+  Admin_id        Int?
+
+  // Relations
+  admin Admin? @relation(fields: [Admin_id], references: [Admin_id], onDelete: SetNull)
+}
+
+model Super_Admin {
+  Super_Admin_id Int    @id @default(autoincrement())
+  Name           String
+  Email          String @unique
+  Access_key     String
+}
