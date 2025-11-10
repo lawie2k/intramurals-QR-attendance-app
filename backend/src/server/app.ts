@@ -2,11 +2,11 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 
-import authRouter from '../routes/auth.js';
-import studentsRouter from '../routes/students.js';
-import attendanceRouter from '../routes/attendance.js';
-import faceRouter from '../routes/face.js';
-import eventsRouter from '../routes/events.js';
+import authRouter from '../routes/auth';
+import studentsRouter from '../routes/students';
+import attendanceRouter from '../routes/attendance';
+import faceRouter from '../routes/face';
+import eventsRouter from '../routes/events';
 
 const app = express();
 

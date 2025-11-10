@@ -7,8 +7,13 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import {useNavigation} from "@react-navigation/native";
 
+import {useAuth} from "../context/AuthContext";
+
 export default function Profile() {
     const navigation = useNavigation();
+    const {auth} = useAuth();
+
+
   return (
     <SafeAreaProvider>
       <SafeAreaView>
@@ -29,9 +34,9 @@ export default function Profile() {
 
                         elevation: 7,
                     }}>
-                  <Text className="text-[20px] font-bold">Justin Nabunturan</Text>
-                  <Text className="text-[16px] font-bold mt-1">143903</Text>
-                  <Text className="text-[16px] font-bold mt-1">@umindanao.edu.ph</Text>
+                  <Text className="text-[20px] font-bold">{auth.firstName} {auth.lastName}</Text>
+                  <Text className="text-[16px] font-bold mt-1">{auth.studentId}</Text>
+                  <Text className="text-[16px] font-bold mt-1">{auth.email}</Text>
               </View>
           </View>
 

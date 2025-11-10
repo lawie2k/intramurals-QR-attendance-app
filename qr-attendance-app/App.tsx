@@ -13,6 +13,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import BottomBar from "./components/bottomBar";
+import { AuthProvider } from "./context/AuthContext";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -35,17 +36,18 @@ function Tabs() {
 export default function App() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={Login as any} />
-          <Stack.Screen name="Signup" component={Signup as any} />
+      <AuthProvider>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={Login as any} />
+            <Stack.Screen name="Signup" component={Signup as any} />
             <Stack.Screen name="Facescan" component={FaceScan as any} />
             <Stack.Screen name="Scansuccess" component={ScanSuccess as any} />
             <Stack.Screen name="Resetpass" component={ResetPass as any} />
-          {/* Render the bottom tabs instead of a single Home screen */}
-          <Stack.Screen name="Main" component={Tabs as any} />
-        </Stack.Navigator>
-      </NavigationContainer>
+            <Stack.Screen name="Main" component={Tabs as any} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </AuthProvider>
     </GestureHandlerRootView>
   );
 }

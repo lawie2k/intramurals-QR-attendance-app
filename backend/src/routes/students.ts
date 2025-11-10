@@ -1,14 +1,17 @@
 import { Router } from 'express';
-import { prisma } from '../lib/prisma.js';
+import { prisma } from '../lib/prisma';
 import QRCode from 'qrcode';
-import { signPayload } from '../lib/crypto.js';
+import { signPayload } from '../lib/crypto';
 
 const router = Router();
 
 router.get('/me/qr', async (req, res) => {
-  // For demo purposes, read studentId from query; later, use JWT auth middleware
-  const studentId = (req.query.studentId as string) || '';
-  if (!studentId) return res.status(400).json({ error: 'studentId required' });
+  const idParam = req.query.studentId as string | undefined;
+  if (!idParam) return res.status(400).json({ error: 'studentId required' });
+
+  const studentId = Number(idParam);
+  if (Number.isNaN(studentId)) return res.status(400).json({ error: 'studentId must be a number' });
+
   const student = await prisma.student.findUnique({ where: { id: studentId } });
   if (!student) return res.status(404).json({ error: 'Not found' });
 

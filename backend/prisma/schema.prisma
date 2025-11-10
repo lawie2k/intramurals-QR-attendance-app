@@ -7,82 +7,51 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Leaderboards {
-  Dept_id       Int        @id @default(autoincrement())
-  Name          String
-  Medals_gold   Int        @default(0)
-  Medals_silver Int        @default(0)
-  Medals_bronze Int        @default(0)
-
-  // Relations
-  students      Student[]
-}
-
 model Student {
-  Student_id      Int       @id @default(autoincrement())
-  Name            String
-  Email           String    @unique
-  Dept_id         Int?
-  Qr_code         String?
-  Face_data       String?   // AWS Rekognition FaceId
-  Date_registered DateTime  @default(now())
-
-  // Relations
-  department      Leaderboards? @relation(fields: [Dept_id], references: [Dept_id])
-  attendances     Attendance[]
-
-  @@map("Student")
+  id            Int           @id @default(autoincrement())
+  firstName     String        @db.VarChar(128)
+  lastName      String        @db.VarChar(128)
+  email         String        @unique @db.VarChar(191)
+  studentId     String        @unique @db.VarChar(64)
+  passwordHash  String        @db.VarChar(191)
+  qrToken       String        @default(uuid()) @unique @db.VarChar(191)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  faceTemplates FaceTemplate[]
+  attendances   Attendance[]
 }
 
-model Event {
-  Event_id Int      @id @default(autoincrement())
-  Name     String
-  Date     DateTime?
-  Time     DateTime?
-  Venue    String?
-  Status   String?  @default("Scheduled")
+model FaceTemplate {
+  id            Int      @id @default(autoincrement())
+  studentId     Int
+  embedding     Json
+  imageUrl      String   @db.VarChar(255)
+  model         String   @db.VarChar(64)
+  embeddingDim  Int
+  createdAt     DateTime @default(now())
+  student       Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
-  // Relations
-  attendances Attendance[]
+  @@index([studentId])
 }
 
 model Attendance {
-  Attendance_id Int      @id @default(autoincrement())
-  Student_id    Int
-  Event_id      Int
-  Checkin_time  DateTime @default(now())
-  Status        String?  @default("Present")
+  id           Int      @id @default(autoincrement())
+  studentId    Int
+  eventId      Int
+  qrToken      String   @db.VarChar(191)
+  faceVerified Boolean  @default(false)
+  faceScore    Float?
+  verifyMethod String?
+  timestamp    DateTime @default(now())
+  student      Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
-  // Relations
-  student Student @relation(fields: [Student_id], references: [Student_id], onDelete: Cascade)
-  event   Event   @relation(fields: [Event_id], references: [Event_id], onDelete: Cascade)
+  @@index([studentId])
+  @@index([eventId])
+  @@index([qrToken])
 }
 
-model Admin {
-  Admin_id      Int       @id @default(autoincrement())
-  Name          String
-  Role          String?   @default("Admin")
-  Email         String    @unique
-  Password_hash String
-
-  // Relations
-  announcements Announcement[]
-}
-
-model Announcement {
-  Announcement_id Int      @id @default(autoincrement())
-  Title           String
-  Message         String
-  Date_posted     DateTime @default(now())
-  Admin_id        Int?
-
-  // Relations
-  admin Admin? @relation(fields: [Admin_id], references: [Admin_id], onDelete: SetNull)
-}
-
-model Super_Admin {
-  Super_Admin_id Int    @id @default(autoincrement())
-  Name           String
-  Email          String @unique
-  Access_key     String
+model Event {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(128)
+  createdAt DateTime @default(now())
 }

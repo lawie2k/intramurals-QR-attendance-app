@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import http from 'http';
-import app from './server/app.js';
+import app from './server/app';
 
 const port = process.env.PORT ? Number(process.env.PORT) : 4000;
 
