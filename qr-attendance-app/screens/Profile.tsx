@@ -22,7 +22,7 @@ export default function Profile() {
         </View>
 
           <View className=" items-center mt-8">
-              <View className="w-[380px] h-[136px] bg-white rounded-xl px-4 py-8"
+              <View className="w-[380px] h-[136px] bg-white rounded-xl px-4 py-4"
                     style={{
                         shadowColor: "#000",
                         shadowOffset: {
@@ -34,9 +34,10 @@ export default function Profile() {
 
                         elevation: 7,
                     }}>
-                  <Text className="text-[20px] font-bold">{auth.firstName} {auth.lastName}</Text>
-                  <Text className="text-[16px] font-bold mt-1">{auth.studentId}</Text>
+                  <Text className="text-[26px] font-bold pb-1">{auth.firstName} {auth.lastName}</Text>
                   <Text className="text-[16px] font-bold mt-1">{auth.email}</Text>
+                  <Text className="text-[16px] font-bold mt-1">{auth.studentId}</Text>
+                  <Text className="text-[16px] font-bold mt-1">{auth.department}</Text>
               </View>
           </View>
 

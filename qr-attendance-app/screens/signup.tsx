@@ -6,6 +6,7 @@ import {
   Pressable,
   TextInput,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -13,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-import { postJson } from "../lib/api";
+import { getJson, postJson } from "../lib/api";
 
 const isUmEmail = (value: string) => {
     const trimmed = value.trim();
@@ -33,11 +34,36 @@ export default function Signup() {
     const [pwError, setPwError] = React.useState("");
   const [studentId, setStudentId] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const [department, setDepartment] = React.useState("");
+  const [deptOpen, setDeptOpen] = React.useState(false);
+  const [departmentOptions, setDepartmentOptions] = React.useState<string[]>([]);
+  const [deptLoading, setDeptLoading] = React.useState(false);
+
+  React.useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        setDeptLoading(true);
+        const data = await getJson<{ departments: string[] }>("/api/departments");
+        if (Array.isArray(data.departments)) {
+          setDepartmentOptions(data.departments);
+        } else {
+          setDepartmentOptions([]);
+        }
+      } catch (e: any) {
+        console.warn("Failed to load departments", e?.message);
+        setDepartmentOptions([]);
+      } finally {
+        setDeptLoading(false);
+      }
+    };
+    fetchDepartments();
+  }, []);
 
   async function handleRegister() {
-    if (!firstName || !lastName || !email || !studentId || !password) {
-      Alert.alert("Missing info", "First Name, Last Name, Email, Student ID and Password are required.");
+    if (!firstName || !lastName || !email || !studentId || !password || !department) {
+      Alert.alert("Missing info", "First Name, Last Name, Email, Student ID, Department and Password are required.");
       return;
     }
     else if (!isUmEmail(email)) {
@@ -50,6 +76,14 @@ export default function Signup() {
         return;
 
     }
+    if (!confirmPassword.trim()) {
+        Alert.alert("Missing info", "Please Confirm your Password");
+        return;
+    }
+    if (password !== confirmPassword) {
+        Alert.alert("Passwords do not match", "Passwords do not match.");
+        return;
+    }
     try {
       setLoading(true);
       await postJson<{ id: number; firstName: string; lastName: string; email: string; studentId: string }>(
@@ -60,6 +94,7 @@ export default function Signup() {
           email,
           studentId,
           password,
+          department,
         }
       );
       Alert.alert("Success", "Account created. Please log in.", [
@@ -197,6 +232,61 @@ export default function Signup() {
               onChangeText={setStudentId}
             ></TextInput>
 
+            <View className="mt-4">
+              <Pressable
+                className="bg-white w-[300px] h-[50px] px-4 py-3 justify-center"
+                style={{
+                  shadowColor: "#000",
+                  shadowOffset: { width: 0, height: 2 },
+                  shadowOpacity: 0.23,
+                  shadowRadius: 2.62,
+                  elevation: 4,
+                }}
+                onPress={() => {
+                  if (!deptLoading && departmentOptions.length > 0) {
+                    setDeptOpen((o) => !o);
+                  }
+                }}
+              >
+                {deptLoading ? (
+                  <ActivityIndicator color="#900C27" />
+                ) : (
+                  <Text className={department ? "text-black" : "text-[#9CA3AF]"}>
+                    {department || "Select Department"}
+                  </Text>
+                )}
+              </Pressable>
+              {deptOpen && (
+                <View
+                  className="bg-white w-[300px] mt-2 rounded-md"
+                  style={{
+                    shadowColor: "#000",
+                    shadowOffset: { width: 0, height: 2 },
+                    shadowOpacity: 0.23,
+                    shadowRadius: 2.62,
+                    elevation: 4,
+                  }}
+                >
+                  {departmentOptions.length === 0 ? (
+                    <Text className="px-4 py-3 text-[#9CA3AF]">No departments found</Text>
+                  ) : (
+                    departmentOptions.map((opt) => (
+                      <Pressable
+                        key={opt}
+                        className="px-4 py-3"
+                        onPress={() => {
+                          setDepartment(opt);
+                          setDeptOpen(false);
+                        }}
+                      >
+                        <Text className="text-black">{opt}</Text>
+                      </Pressable>
+                    ))
+                  )}
+                </View>
+              )}
+            </View>
+
             <TextInput
               className="bg-white w-[300px] h-[50px] mt-6 px-4 py-3"
               style={{
@@ -221,6 +311,31 @@ export default function Signup() {
               value={password}
               onChangeText={setPassword}
             ></TextInput>
+
+              <TextInput
+                  className="bg-white w-[300px] h-[50px] mt-6 px-4 py-3"
+                  style={{
+                      shadowColor: "#000",
+                      shadowOffset: {
+                          width: 0,
+                          height: 2,
+                      },
+                      shadowOpacity: 0.23,
+                      shadowRadius: 2.62,
+
+                      elevation: 4,
+                  }}
+                  placeholder="Confirm Password"
+                  placeholderTextColor="#9CA3AF"
+                  secureTextEntry
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                  autoComplete="password"
+                  textContentType="password"
+                  returnKeyType="done"
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
+              ></TextInput>
 
             <TouchableOpacity
               className="mt-6 w-[300px] bg-[#900C27] py-3"

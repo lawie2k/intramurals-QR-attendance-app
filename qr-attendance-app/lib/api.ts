@@ -7,7 +7,7 @@ async function handleResponse<T>(res: Response): Promise<T> {
       const data = await res.json();
       if (data?.error) message = String(data.error);
     } catch {
-      // ignore
+ 
     }
     throw new Error(message);
   }
@@ -30,6 +30,19 @@ export async function getJson<T>(path: string, options?: RequestInit): Promise<T
   });
   return handleResponse<T>(res);
 }
+
+export async function postJsonAuth<T>(path: string, token: string, body: unknown): Promise<T> {
+  const res = await fetch(`${API_URL}${path}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(body),
+  });
+  return handleResponse<T>(res);
+}
+
 
 
 

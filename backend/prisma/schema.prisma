@@ -13,6 +13,7 @@ model Student {
   lastName      String        @db.VarChar(128)
   email         String        @unique @db.VarChar(191)
   studentId     String        @unique @db.VarChar(64)
+  department    String?       @db.VarChar(128)
   passwordHash  String        @db.VarChar(191)
   qrToken       String        @default(uuid()) @unique @db.VarChar(191)
   createdAt     DateTime      @default(now())

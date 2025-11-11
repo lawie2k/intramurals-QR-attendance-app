@@ -1,42 +1,64 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-type AuthState = {
+export type AuthState = {
   token: string | null;
-  id: number | null;  // Database ID (for API calls)
-  studentId: string | null;  // Student ID string (for display, e.g., "143903")
+  id: number | null;
+  studentId: string | null;
   firstName: string | null;
   lastName: string | null;
   email: string | null;
+  department: string | null;
 };
 
 type AuthContextValue = {
   auth: AuthState;
   setAuth: (state: AuthState) => void;
   clearAuth: () => void;
+  login: (session: Required<Omit<AuthState, "token">> & { token: string }) => void;
+  logout: () => void;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-const initialState: AuthState = {
+const emptyAuthState: AuthState = {
   token: null,
   id: null,
   studentId: null,
   firstName: null,
   lastName: null,
   email: null,
+  department: null,
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [auth, setAuthState] = useState<AuthState>(initialState);
+  const [auth, setAuthState] = useState<AuthState>(emptyAuthState);
 
-  const setAuth = (state: AuthState) => {
+  function setAuth(state: AuthState) {
     setAuthState(state);
-  };
+  }
 
-  const clearAuth = () => setAuthState(initialState);
+  function clearAuth() {
+    setAuthState(emptyAuthState);
+  }
+
+  function login(session: Required<Omit<AuthState, "token">> & { token: string }) {
+    setAuthState({
+      token: session.token,
+      id: session.id,
+      studentId: session.studentId,
+      firstName: session.firstName,
+      lastName: session.lastName,
+      email: session.email,
+      department: session.department,
+    });
+  }
+
+  function logout() {
+    clearAuth();
+  }
 
   return (
-    <AuthContext.Provider value={{ auth, setAuth, clearAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, clearAuth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

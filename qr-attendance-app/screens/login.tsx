@@ -22,7 +22,7 @@ export default function Login() {
     }
     try {
       setLoading(true);
-      const data = await postJson<{ token: string; id: number; studentId: string; firstName: string; lastName: string; email: string }>(
+      const data = await postJson<{ token: string; id: number; studentId: string; firstName: string; lastName: string; email: string; department: string }>(
         "/api/auth/login",
         {
           email,
@@ -36,6 +36,7 @@ export default function Login() {
         studentId: data.studentId,
         firstName: data.firstName,
         lastName: data.lastName,
+        department: data.department,
       });
       // You can store data.token in secure storage later
       setloginPressed(true);

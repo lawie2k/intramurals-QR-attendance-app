@@ -1,30 +1,64 @@
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
-import {Pressable, View, TextInput, Text} from "react-native";
-import {FontAwesomeIcon} from "@fortawesome/react-native-fontawesome";
-import {faArrowLeft} from "@fortawesome/free-solid-svg-icons";
-import type {IconProp} from "@fortawesome/fontawesome-svg-core";
-import {useNavigation} from "@react-navigation/native";
-import {useState} from "react";
+import {Pressable, View, TextInput, Text, Alert} from "react-native";
+import {FontAwesomeIcon}from "@fortawesome/react-native-fontawesome";
+import {faArrowLeft}from "@fortawesome/free-solid-svg-icons";
+import type {IconProp}from "@fortawesome/fontawesome-svg-core";
+import {useNavigation}from "@react-navigation/native";
+import React, {useState}from "react";
+import {useAuth}from "../context/AuthContext";
+import {postJsonAuth}from "../lib/api";
 
+const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
 export default function ResetPass(){
     const navigation = useNavigation();
+    const {auth} = useAuth();
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleResetPassword = () => {
+    const handleResetPassword = async () => {
+        if (loading) return;
+        if (!oldPassword.trim()) {
+            Alert.alert('Missing info', 'Please enter your current password.');
+            return;
+        }
+        if (!newPassword.trim()) {
+            Alert.alert('Missing info', 'Please enter a new password.');
+            return;
+        }
+        if (!PASSWORD_REGEX.test(newPassword)) {
+            Alert.alert('Weak password', 'Password must have at least 8 characters, 1 uppercase letter, and 1 number.');
+            return;
+        }
+        if (!confirmPassword.trim()) {
+            Alert.alert('Missing info', 'Please confirm your new password.');
+            return;
+        }
         if (newPassword !== confirmPassword) {
-            alert('New passwords do not match');
+            Alert.alert('Mismatch', 'New passwords do not match.');
             return;
         }
-        if (newPassword.length < 6) {
-            alert('New password must be at least 6 characters');
+        if (!auth.token) {
+            Alert.alert('Not logged in', 'Please log in again.');
             return;
         }
-        // Add your password reset logic here
-        alert('Password reset successfully!');
-        navigation.goBack();
+        try {
+            setLoading(true);
+            await postJsonAuth<{ ok: true }>(
+                "/api/auth/reset-password",
+                auth.token,
+                { oldPassword, newPassword }
+            );
+            Alert.alert('Success', 'Password reset successfully.', [
+                { text: 'OK', onPress: () => navigation.goBack() }
+            ]);
+        } catch (e: any) {
+            Alert.alert('Reset failed', e?.message ?? 'Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return(
@@ -90,7 +124,7 @@ export default function ResetPass(){
                         returnKeyType="next"
                     />
                     <TextInput
-                        className="bg-white w-[300px] h-[50px] mt-4 px-4 py-3 "
+                        className="bg-white w-[300px] h_[50px] mt-4 px-4 py-3 "
                         style={{
                             shadowColor: "#000",
                             shadowOffset: {
@@ -117,12 +151,13 @@ export default function ResetPass(){
                         onPress={handleResetPassword}
                         className="w-[310px] h-[50px] bg-[#900C27] rounded-full mt-8 flex items-center justify-center"
                     >
-                        <Text className="text-white text-lg font-bold">Reset Password</Text>
+                        <Text className="text-white text-lg font-bold">
+                            {loading ? "Resetting..." : "Reset Password"}
+                        </Text>
                     </Pressable>
-
-
                 </View>
             </SafeAreaView>
         </SafeAreaProvider>
-    )
+);
 }
+

@@ -7,6 +7,7 @@ import studentsRouter from '../routes/students';
 import attendanceRouter from '../routes/attendance';
 import faceRouter from '../routes/face';
 import eventsRouter from '../routes/events';
+import departmentsRouter from '../routes/departments';
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use('/api/students', studentsRouter);
 app.use('/api/attendance', attendanceRouter);
 app.use('/api/face', faceRouter);
 app.use('/api/events', eventsRouter);
+app.use('/api/departments', departmentsRouter);
 
 export default app;
 
