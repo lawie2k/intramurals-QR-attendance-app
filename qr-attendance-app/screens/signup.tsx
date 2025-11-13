@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-import { getJson, postJson } from "../lib/api";
+import { getJson } from "../lib/api";
 
 const isUmEmail = (value: string) => {
     const trimmed = value.trim();
@@ -24,8 +24,17 @@ const isUmEmail = (value: string) => {
     return domain === "umindanao.edu.ph";
 };
 
+type SignupFormData = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  studentId: string;
+  department: string;
+  password: string;
+};
+
 export default function Signup() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [firstName, setFirstName] = React.useState("");
   const [lastName, setLastName] = React.useState("");
   const [email, setEmail] = React.useState("");
@@ -35,7 +44,6 @@ export default function Signup() {
   const [studentId, setStudentId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
   const [department, setDepartment] = React.useState("");
   const [deptOpen, setDeptOpen] = React.useState(false);
   const [departmentOptions, setDepartmentOptions] = React.useState<string[]>([]);
@@ -61,50 +69,53 @@ export default function Signup() {
     fetchDepartments();
   }, []);
 
-  async function handleRegister() {
+  function validateForm(): boolean {
     if (!firstName || !lastName || !email || !studentId || !password || !department) {
-      Alert.alert("Missing info", "First Name, Last Name, Email, Student ID, Department and Password are required.");
-      return;
+      Alert.alert(
+        "Missing info",
+        "First Name, Last Name, Email, Student ID, Department and Password are required."
+      );
+      return false;
     }
-    else if (!isUmEmail(email)) {
-        Alert.alert("Invalid Email", "Please enter a valid Umindanao email.");
+    if (!isUmEmail(email)) {
+      Alert.alert("Invalid Email", "Please enter a valid Umindanao email.");
+      return false;
     }
     if (!isStrongPassword(password)) {
-        setPwError("Min 8 chars, 1 uppercase, 1 number");
-        Alert.alert("Invalid Password", "Password must have at least 8 characters, 1 uppercase letter, and 1 number.");
-        setLoading(false);
-        return;
-
+      setPwError("Min 8 chars, 1 uppercase, 1 number");
+      Alert.alert(
+        "Invalid Password",
+        "Password must have at least 8 characters, 1 uppercase letter, and 1 number."
+      );
+      return false;
     }
+    setPwError("");
     if (!confirmPassword.trim()) {
-        Alert.alert("Missing info", "Please Confirm your Password");
-        return;
+      Alert.alert("Missing info", "Please confirm your password.");
+      return false;
     }
     if (password !== confirmPassword) {
-        Alert.alert("Passwords do not match", "Passwords do not match.");
-        return;
+      Alert.alert("Passwords do not match", "Passwords do not match.");
+      return false;
     }
-    try {
-      setLoading(true);
-      await postJson<{ id: number; firstName: string; lastName: string; email: string; studentId: string }>(
-        "/api/auth/signup",
-        {
-          firstName,
-          lastName,
-          email,
-          studentId,
-          password,
-          department,
-        }
-      );
-      Alert.alert("Success", "Account created. Please log in.", [
-        { text: "OK", onPress: () => navigation.navigate("Login" as never) },
-      ]);
-    } catch (e: any) {
-      Alert.alert("Sign up failed", e?.message ?? "Please try again.");
-    } finally {
-      setLoading(false);
+    return true;
+  }
+
+  function handleRegister() {
+    if (!validateForm()) {
+      return;
     }
+
+    const formData = {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      email: email.trim(),
+      studentId: studentId.trim(),
+      department,
+      password,
+    };
+
+    navigation.navigate("Facescan" as never, { formData } as never);
   }
   return (
     <SafeAreaProvider>
@@ -339,11 +350,10 @@ export default function Signup() {
 
             <TouchableOpacity
               className="mt-6 w-[300px] bg-[#900C27] py-3"
-              disabled={loading}
               onPress={handleRegister}
             >
               <Text className="text-center text-white text-[17px] font-bold">
-                {loading ? "Registering..." : "Register"}
+                Continue to Face Scan
               </Text>
             </TouchableOpacity>
           </View>

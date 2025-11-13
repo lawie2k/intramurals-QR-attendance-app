@@ -35,9 +35,9 @@ export default function Profile() {
                         elevation: 7,
                     }}>
                   <Text className="text-[26px] font-bold pb-1">{auth.firstName} {auth.lastName}</Text>
-                  <Text className="text-[16px] font-bold mt-1">{auth.email}</Text>
-                  <Text className="text-[16px] font-bold mt-1">{auth.studentId}</Text>
-                  <Text className="text-[16px] font-bold mt-1">{auth.department}</Text>
+                  <Text className="text-[16px] font-bold mt-1">Email: {auth.email}</Text>
+                  <Text className="text-[16px] font-bold mt-1">ID no. {auth.studentId}</Text>
+                  <Text className="text-[16px] font-bold mt-1">Department: {auth.department}</Text>
               </View>
           </View>
 
