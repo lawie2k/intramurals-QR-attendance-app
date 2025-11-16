@@ -64,7 +64,7 @@ export default function ResetPass(){
     return(
         <SafeAreaProvider>
             <SafeAreaView>
-                <View className=" ml-8 mt-10 ">
+                <View className="flex-row items-center justify-between px-6 pt-6">
                     <Pressable onPress={() => navigation.goBack()}>
                         <FontAwesomeIcon
                             icon={faArrowLeft as IconProp}
@@ -72,9 +72,12 @@ export default function ResetPass(){
                             style={{ color: "#C70039" }}
                         />
                     </Pressable>
+                    <Text className="text-[24px] color-[#900C27] font-extrabold">Reset Password</Text>
+                    <View style={{ width: 24 }} />
                 </View>
-                <View className="flex items-center pb-6">
-                    <Text className="text-[#900C27] text-[28px] py-4 font-bold">Reset Password</Text>
+
+                <View className="flex items-center pb-6 pt-16">
+
                     <TextInput
                         className="bg-white w-[300px] h-[50px] mt-4 px-4 py-3 "
                         style={{

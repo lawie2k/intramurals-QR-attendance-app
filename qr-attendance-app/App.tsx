@@ -9,6 +9,7 @@ import Profile from "./screens/Profile";
 import FaceScan from "./screens/facescan";
 import ScanSuccess from "./screens/scanSuccess";
 import ResetPass from "./screens/resetpass";
+import AttendanceHistory from "./screens/AttendanceHistory";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -45,6 +46,7 @@ export default function App() {
             <Stack.Screen name="Scansuccess" component={ScanSuccess as any} />
             <Stack.Screen name="Resetpass" component={ResetPass as any} />
             <Stack.Screen name="Main" component={Tabs as any} />
+              <Stack.Screen name="AttendanceHistory" component={AttendanceHistory as any} />
           </Stack.Navigator>
         </NavigationContainer>
       </AuthProvider>

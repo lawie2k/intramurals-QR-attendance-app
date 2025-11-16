@@ -54,6 +54,27 @@ export default function Profile() {
 
                         elevation: 7,
                     }}>
+                  <Text>
+                      <TouchableOpacity onPress={()=>{navigation.navigate("AttendanceHistory"as never)}}>
+                          <Text className="text-[16px] font-bold px-4 py-3">Attendance History</Text>
+                      </TouchableOpacity>
+                  </Text>
+              </View>
+          </View>
+
+          <View className="items-center mt-4">
+              <View className="w-[380px] h-[40px] bg-white rounded-xl"
+                    style={{
+                        shadowColor: "#000",
+                        shadowOffset: {
+                            width: 0,
+                            height: 3,
+                        },
+                        shadowOpacity: 0.29,
+                        shadowRadius: 4.65,
+
+                        elevation: 7,
+                    }}>
                  <TouchableOpacity onPress={()=>{navigation.navigate("Resetpass" as never)}}>
                      <Text className="text-[16px] font-bold px-4 py-3">Password</Text>
                  </TouchableOpacity>
