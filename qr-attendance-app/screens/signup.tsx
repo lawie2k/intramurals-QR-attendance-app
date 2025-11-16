@@ -1,12 +1,12 @@
 import React from "react";
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  Pressable,
-  TextInput,
-  Alert,
-  ActivityIndicator,
+    View,
+    Text,
+    TouchableOpacity,
+    Pressable,
+    TextInput,
+    Alert,
+    ActivityIndicator, ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
-import { getJson } from "../lib/api";
+import { postJson } from "../lib/api";
 
 const isUmEmail = (value: string) => {
     const trimmed = value.trim();
@@ -46,28 +46,24 @@ export default function Signup() {
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [department, setDepartment] = React.useState("");
   const [deptOpen, setDeptOpen] = React.useState(false);
-  const [departmentOptions, setDepartmentOptions] = React.useState<string[]>([]);
-  const [deptLoading, setDeptLoading] = React.useState(false);
-
-  React.useEffect(() => {
-    const fetchDepartments = async () => {
-      try {
-        setDeptLoading(true);
-        const data = await getJson<{ departments: string[] }>("/api/departments");
-        if (Array.isArray(data.departments)) {
-          setDepartmentOptions(data.departments);
-        } else {
-          setDepartmentOptions([]);
-        }
-      } catch (e: any) {
-        console.warn("Failed to load departments", e?.message);
-        setDepartmentOptions([]);
-      } finally {
-        setDeptLoading(false);
-      }
-    };
-    fetchDepartments();
-  }, []);
+  const departmentOptions = React.useMemo(
+    () => [
+      "Business Administration",
+      "Computer Science",
+      "Criminology",
+      "Education",
+      "Engineering",
+      "Hospitality Management",
+      "Information Technology",
+      "Maritime",
+      "Nursing",
+      "Pharmacy",
+      "Psychology",
+      "Tourism",
+    ],
+    []
+  );
+  const [deptLoading] = React.useState(false);
 
   function validateForm(): boolean {
     if (!firstName || !lastName || !email || !studentId || !password || !department) {
@@ -254,7 +250,7 @@ export default function Signup() {
                   elevation: 4,
                 }}
                 onPress={() => {
-                  if (!deptLoading && departmentOptions.length > 0) {
+                  if (!deptLoading) {
                     setDeptOpen((o) => !o);
                   }
                 }}
@@ -268,20 +264,18 @@ export default function Signup() {
                 )}
               </Pressable>
               {deptOpen && (
-                <View
-                  className="bg-white w-[300px] mt-2 rounded-md"
-                  style={{
-                    shadowColor: "#000",
-                    shadowOffset: { width: 0, height: 2 },
-                    shadowOpacity: 0.23,
-                    shadowRadius: 2.62,
-                    elevation: 4,
-                  }}
-                >
-                  {departmentOptions.length === 0 ? (
-                    <Text className="px-4 py-3 text-[#9CA3AF]">No departments found</Text>
-                  ) : (
-                    departmentOptions.map((opt) => (
+               <ScrollView
+                    className="rounded-md absolute top-[50px] w-[300px] h-[150px] bg-white z-10"
+                    style={{
+                      maxHeight: 220,
+                        shadowColor: "#000",
+                        shadowOffset: { width: 0, height: 2 },
+                        shadowOpacity: 0.23,
+                        shadowRadius: 2.62,
+                        elevation: 4,
+                    }}
+                  >
+                    {departmentOptions.map((opt) => (
                       <Pressable
                         key={opt}
                         className="px-4 py-3"
@@ -292,9 +286,8 @@ export default function Signup() {
                       >
                         <Text className="text-black">{opt}</Text>
                       </Pressable>
-                    ))
-                  )}
-                </View>
+                    ))}
+                  </ScrollView>
               )}
             </View>
 

@@ -179,3 +179,5 @@ If face-api.js doesn't meet your needs, consider:
 - **face_recognition** (Python) - Simple, good accuracy
 - **OpenCV with DNN** - More control, requires more setup
 
+
+

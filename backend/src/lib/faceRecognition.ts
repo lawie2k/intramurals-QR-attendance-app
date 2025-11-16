@@ -78,7 +78,7 @@ export async function extractFaceEmbedding(imageBuffer: Buffer): Promise<number[
       img.src = imageBuffer;
     });
 
-    // Detect face and extract descriptor
+    // Use faster detection mode for quick checks (no landmarks needed for detection-only)
     // Type assertion needed because canvas Image doesn't exactly match HTMLImageElement
     const detection = await faceapi
       .detectSingleFace(img as any)

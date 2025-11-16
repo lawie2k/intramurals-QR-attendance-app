@@ -1,4 +1,39 @@
-export const API_URL = "http://localhost:4000";
+import { Platform, NativeModules } from "react-native";
+
+const DEFAULT_PORT = 4000;
+
+function resolveDevServerUrl(): string {
+  // Allow explicit override via Expo env vars
+  const envUrl = process.env.EXPO_PUBLIC_API_URL || process.env.API_URL;
+  if (envUrl) {
+    return envUrl.replace(/\/$/, "");
+  }
+
+  if (__DEV__) {
+    const scriptURL: string | undefined = NativeModules?.SourceCode?.scriptURL;
+    if (scriptURL) {
+      try {
+        const url = new URL(scriptURL);
+        const hostname = url.hostname;
+        if (hostname) {
+          return `http://${hostname}:${DEFAULT_PORT}`;
+        }
+      } catch (error) {
+        // fall through to defaults
+      }
+    }
+    // Fallback for Expo Go LAN: use localhost for simulators, 10.0.2.2 for Android emulators
+    if (Platform.OS === "android") {
+      return "http://10.0.2.2:4000";
+    }
+    return "http://localhost:4000";
+  }
+
+  // Production/staging fallback
+  return "https://your-production-api.example.com";
+}
+
+export const API_URL = resolveDevServerUrl();
 
 async function handleResponse<T>(res: Response): Promise<T> {
   if (!res.ok) {

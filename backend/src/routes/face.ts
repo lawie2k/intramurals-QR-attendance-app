@@ -4,11 +4,7 @@ import { extractFaceEmbedding, findBestMatch } from '../lib/faceRecognition';
 
 const router = Router();
 
-/**
- * POST /api/face/enroll
- * Enroll a student's face for recognition
- * Body: { studentId: number, image: string (base64) }
- */
+
 router.post('/enroll', async (req, res) => {
   try {
     const { studentId, image } = req.body as { studentId: number; image: string };
@@ -54,11 +50,7 @@ router.post('/enroll', async (req, res) => {
   }
 });
 
-/**
- * POST /api/face/verify
- * Verify a face against a student's enrolled templates
- * Body: { studentId: number, image: string (base64), threshold?: number }
- */
+
 router.post('/verify', async (req, res) => {
   try {
     const { studentId, image, threshold = 0.6 } = req.body as {
@@ -114,6 +106,33 @@ router.post('/verify', async (req, res) => {
   } catch (error: any) {
     console.error('Error verifying face:', error);
     return res.status(500).json({ error: error.message || 'Failed to verify face' });
+  }
+});
+
+
+router.post('/detect', async (req, res) => {
+  try {
+    const { image } = req.body as { image: string };
+
+    if (!image) {
+      return res.json({ detected: false, message: 'Missing image' });
+    }
+
+    // Convert base64 to buffer
+    const imageBuffer = Buffer.from(image, 'base64');
+
+    // Extract face embedding (just to check if face exists)
+    // This is the bottleneck - using pure JS TensorFlow is slow
+    const embedding = await extractFaceEmbedding(imageBuffer);
+    
+    if (!embedding) {
+      return res.json({ detected: false, message: 'No face detected' });
+    }
+
+    return res.json({ detected: true, message: 'Face detected' });
+  } catch (error: any) {
+    // Don't log errors for detection failures (too noisy)
+    return res.json({ detected: false, message: 'Detection failed' });
   }
 });
 
